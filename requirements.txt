@@ -2,8 +2,8 @@ fastapi
 uvicorn[standard]
 psycopg[binary]
 pydantic
+python-dotenv
 pydantic-settings
 python-multipart
 aiofiles
 pytest
-httpx

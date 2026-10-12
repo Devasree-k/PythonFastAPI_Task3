@@ -87,14 +87,34 @@ class CollectionRepository:
         async with await get_connection() as connection:
             async with connection.cursor() as cursor:
                 await cursor.execute(
-                    """UPDATE transport_collections SET driver_id=%s, vehicle_number=%s, collection_date=%s,
-                    morning_trips=%s, evening_trips=%s, morning_collection=%s, evening_collection=%s,
-                    fuel_expense=%s, other_expense=%s, total_trips=%s, total_collection=%s,
-                    total_expense=%s, net_collection=%s WHERE id=%s RETURNING id""",
-                    (data["driver_id"], data["vehicle_number"], data["collection_date"], data["morning_trips"],
-                     data["evening_trips"], data["morning_collection"], data["evening_collection"],
-                     data["fuel_expense"], data["other_expense"], totals.total_trips,
-                     totals.total_collection, totals.total_expense, totals.net_collection, collection_id)
+                    '''UPDATE transport_collections SET driver_id=%s,
+                        vehicle_number=%s, 
+                        collection_date=%s,
+                        morning_trips=%s, 
+                        evening_trips=%s, 
+                        morning_collection=%s, 
+                        evening_collection=%s,
+                        fuel_expense=%s, 
+                        other_expense=%s, 
+                        total_trips=%s, 
+                        total_collection=%s,
+                        total_expense=%s, 
+                        net_collection=%s 
+                    WHERE id=%s RETURNING id''',
+                    (data["driver_id"], 
+                     data["vehicle_number"], 
+                     data["collection_date"], 
+                     data["morning_trips"],
+                     data["evening_trips"], 
+                     data["morning_collection"], 
+                     data["evening_collection"],
+                     data["fuel_expense"], 
+                     data["other_expense"], 
+                     totals.total_trips,
+                     totals.total_collection, 
+                     totals.total_expense, 
+                     totals.net_collection, 
+                     collection_id)
                 )
                 row = await cursor.fetchone()
         return await self.get_by_id(row["id"]) if row else None

@@ -61,32 +61,6 @@ class DriverRepository:
                 )
                 return await cursor.fetchone()
 
-    # async def update(self, driver_id: int, data: dict):
-    #     async with await get_connection() as connection:
-    #         async with connection.cursor() as cursor:
-    #             await cursor.execute(
-    #                 '''
-    #                 UPDATE drivers
-    #                 SET
-    #                     driver_name = %s,
-    #                     phone_number = %s,
-    #                     is_active = %s
-    #                 WHERE driver_id = %s
-    #                 RETURNING
-    #                     driver_id,
-    #                     driver_name,
-    #                     phone_number,
-    #                     is_active
-    #                 ''',
-    #                 (
-    #                     data["driver_name"],
-    #                     data["phone_number"],
-    #                     data["is_active"],
-    #                     driver_id
-    #                 )
-    #             )
-    #             return await cursor.fetchone()
-
 
     async def update(self, driver_id: int, data: dict):
         allowed_fields = {"driver_name", "phone_number", "is_active"}
@@ -96,7 +70,7 @@ class DriverRepository:
             return await self.get_by_id(driver_id)
 
         set_clause = ", ".join(f"{key} = %s" for key in data)
-        values = list(data.values()) + [driver_id]
+        values = list(data.values()) + [driver_id]  
 
         async with await get_connection() as connection:
             async with connection.cursor() as cursor:

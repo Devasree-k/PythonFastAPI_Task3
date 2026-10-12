@@ -45,8 +45,14 @@ class CollectionService:
     async def get_page(self, page: int, page_size: int, driver_id: int | None):
         items, total = await self.repository.get_page(page, page_size, driver_id)
         pages = (total + page_size - 1) // page_size
-        return {"items": items, "page": page, "page_size": page_size, "total": total,
-                "total_pages": pages, "has_next": page < pages, "has_previous": page > 1}
+        return {"items": items,
+                "page": page, 
+                "page_size": page_size, 
+                "total": total,
+                "total_pages": pages, 
+                "has_next": page < pages, 
+                "has_previous": page > 1
+                }
 
 
     async def update(self, collection_id: int, data: dict):
